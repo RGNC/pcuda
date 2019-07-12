@@ -57,7 +57,7 @@ Type ./pcuda -h to list the different options.
 ----------
 ## 5. Downloads ##
 
-[Required Counterslib library](http://sourceforge.net/projects/pmcgpu/files/counterslib)
+[Required Counterslib library](https://github.com/miguelamda/counterslib)
 
 Read the howto.pdf (extract from Miguel A. Martínez-del-Amor's thesis) for futher information about the simulators and a getting started guide. You can find it in the [root folder of files of PMCGPU](http://sourceforge.net/projects/pmcgpu/files).
 
