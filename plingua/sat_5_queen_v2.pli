@@ -1,0 +1,207 @@
+@variant<membrane_division> 
+/* 
+  * This P-Lingua program defines a family of recognizer P systems 
+  * to solve the SAT problem. Each elementary membrane in the halting 
+  * configuration encodes a truth assignment of the formula.
+  *
+  */
+
+/*
+    Copyright (c) 2012 Miguel Á. Gutiérrez-Naranjo (RGNC, University of Seville)
+    
+    This work was published on:
+	Solving the N-Queens puzzle with P systems, Gutiérrez-Naranjo, Miguel A., Martínez-del-Amor Miguel A., Pérez-Hurtado Ignacio, 
+	and Pérez-Jiménez Mario J. , 7th Brainstorming Week on Membrane Computing, vol I, 199-210, 2009.
+    
+    This file is part of PCUDA.
+  
+    PCUDA is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    PCUDA is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with PCUDA.  If not, see <http://www.gnu.org/licenses/>. */
+
+
+/* Module that defines a family of recognizer P systems
+   to solve the SAT problem */
+
+def Sat(m,n)
+{
+ /* Initial configuration */
+ @mu = [[]'2]'1;
+
+ /* Initial multisets */
+ @ms(2) = d{0},v{0};
+
+ /* Set of rules */
+ /* a.1 */
+ [d{j}]'2 --> +[s{j+1}]-[s{j+1}] : 0 <= j <= n-1;
+
+/*a.2*/
+{
+  +[d{j}]'2 --> []d{j};
+  -[d{j}]'2 --> []d{j};
+ } : 1<=j<=n;
+
+/*a.3*/
+d{j}[]'2 --> [d{j}] : 1<=j<=n-1;
+
+/*a.4*/ 
+[d{i} --> d{i+1}]'1 : n <= i<= 3*n-4;
+[d{i} --> d{i+1}]'1 : 3*n-2 <= i<= 3*n+2*m;
+
+/*a.5*/
+[d{3*n-3} --> d{3*n-2},e]'1;
+
+/*a.6*/
+[d{3*n+2*m+1}]'1 --> +[]No;
+
+/*b*/
+{
+ +[s{j} --> t{j},d{j}]'2;
+ -[s{j} --> f{j},d{j}]'2;
+  } : 1<=j<=n;
+
+/*c.1*/
+
+{
+  +[x{i,1} --> r{i,1}]'2;
+  +[y{i,1} --> #]'2;
+  -[x{i,1} --> #]'2;
+  -[y{i,1} --> r{i,1}]'2;
+ } : 1 <= i <= m;
+
+
+/*c.2*/
+ {
+  +[x{i,j} --> z{i,j}]'2;
+  +[y{i,j} --> h{i,j}]'2;
+  -[x{i,j} --> z{i,j}]'2;
+  -[y{i,j} --> h{i,j}]'2;
+ } : 1<=i<=m, 2<=j<=n;
+
+/*d*/
+ {
+  +[z{i,j} --> x{i,j-1}]'2;
+  +[h{i,j} --> y{i,j-1}]'2;
+  -[z{i,j} --> x{i,j-1}]'2;
+  -[h{i,j} --> y{i,j-1}]'2;
+ } : 1<=i<=m, 2<=j<=n;
+
+/*e.1*/
+[r{i,j} --> r{i,j+1}]'2 : 1<=i<=m, 1<=j<=2*n-1;
+
+/*e.2*/
++[r{1,2*n}]'2 --> -[]r{1,2*n};
+
+/*e.3*/
+-[r{1,2*n} --> #]'2;
+
+/*e.4*/
+-[r{j,2*n} --> r{j-1,2*n}]'2 : 2<= j <= m;
+
+/*e.5*/
+r{1,2*n}-[]'2 --> +[r];
+
+/*f*/
+e[]'2 --> +[c{1}];
+
+/*g.1*/
+ {
+  [v{i} --> v{i+1}]'2;
+  +[v{i} --> v{i+1}]'2;
+  -[v{i} --> v{i+1}]'2;
+
+  } : 0<=i<=6*n+2*m-2;
+
+/*g.2*/
+-[v{6*n+2*m-1} --> #]'2;
+
+/*g.3*/
++[v{6*n+2*m-1}]'2 --> r;
+
+/*h.1*/
+-[c{j} --> c{j+1}]'2 : 1<=j<=m;
+
+/*h.2*/
++[c{m+1}]'2 --> -[]c{m+1};
+
+/*h.3*/
+[c{m+1}]'1 --> +[]Yes;
+
+/*i*/
++[r --> #]'2;
+
+} /* End of Sat module */
+
+/* Main module */
+def main()
+{
+ /* Call to Sat(m,n) module 
+    m = número de cláusulas
+    n = número de variables */
+ 
+ call Sat(165,25);
+ 
+ /* Expansion of the input multiset */
+ 
+ @ms(2) += x{1,1}, x{1,2}, x{1,3}, x{1,4}, x{1,5}, x{2,6}, x{2,7}, x{2,8}, x{2,9},
+x{2,10}, x{3,11}, x{3,12}, x{3,13}, x{3,14}, x{3,15}, x{4,16}, x{4,17},
+x{4,18}, x{4,19}, x{4,20}, x{5,21}, x{5,22}, x{5,23}, x{5,24}, x{5,25},
+y{6,1}, y{6,2}, y{7,1}, y{7,3}, y{8,1}, y{8,4}, y{9,1}, y{9,5}, y{10,2},
+y{10,3}, y{11,2}, y{11,4}, y{12,2}, y{12,5}, y{13,3}, y{13,4}, y{14,3},
+y{14,5}, y{15,4}, y{15,5}, y{16,6}, y{16,7}, y{17,6}, y{17,8}, y{18,6},
+y{18,9}, y{19,6}, y{19,10}, y{20,7}, y{20,8}, y{21,7}, y{21,9}, y{22,7},
+y{22,10}, y{23,8}, y{23,9}, y{24,8}, y{24,10}, y{25,9}, y{25,10}, y{26,11},
+y{26,12}, y{27,11}, y{27,13}, y{28,11}, y{28,14}, y{29,11}, y{29,15},
+y{30,12}, y{30,13}, y{31,12}, y{31,14}, y{32,12}, y{32,15}, y{33,13},
+y{33,14}, y{34,13}, y{34,15}, y{35,14}, y{35,15}, y{36,16}, y{36,17},
+y{37,16}, y{37,18}, y{38,16}, y{38,19}, y{39,16}, y{39,20}, y{40,17},
+y{40,18}, y{41,17}, y{41,19}, y{42,17}, y{42,20}, y{43,18}, y{43,19},
+y{44,18}, y{44,20}, y{45,19}, y{45,20}, y{46,21}, y{46,22}, y{47,21},
+y{47,23}, y{48,21}, y{48,24}, y{49,21}, y{49,25}, y{50,22}, y{50,23},
+y{51,22}, y{51,24}, y{52,22}, y{52,25}, y{53,23}, y{53,24}, y{54,23},
+y{54,25}, y{55,24}, y{55,25}, y{56,1}, y{56,6}, y{57,1}, y{57,11}, y{58,1},
+y{58,16}, y{59,1}, y{59,21}, y{60,6}, y{60,11}, y{61,6}, y{61,16}, y{62,6},
+y{62,21}, y{63,11}, y{63,16}, y{64,11}, y{64,21}, y{65,16}, y{65,21},
+y{66,2}, y{66,7}, y{67,2}, y{67,12}, y{68,2}, y{68,17}, y{69,2}, y{69,22},
+y{70,7}, y{70,12}, y{71,7}, y{71,17}, y{72,7}, y{72,22}, y{73,12},
+y{73,17}, y{74,12}, y{74,22}, y{75,17}, y{75,22}, y{76,3}, y{76,8},
+y{77,3}, y{77,13}, y{78,3}, y{78,18}, y{79,3}, y{79,23}, y{80,8}, y{80,13},
+y{81,8}, y{81,18}, y{82,8}, y{82,23}, y{83,13}, y{83,18}, y{84,13},
+y{84,23}, y{85,18}, y{85,23}, y{86,4}, y{86,9}, y{87,4}, y{87,14}, y{88,4},
+y{88,19}, y{89,4}, y{89,24}, y{90,9}, y{90,14}, y{91,9}, y{91,19}, y{92,9},
+y{92,24}, y{93,14}, y{93,19}, y{94,14}, y{94,24}, y{95,19}, y{95,24},
+y{96,5}, y{96,10}, y{97,5}, y{97,15}, y{98,5}, y{98,20}, y{99,5}, y{99,25},
+y{100,10}, y{100,15}, y{101,10}, y{101,20}, y{102,10}, y{102,25},
+y{103,15}, y{103,20}, y{104,15}, y{104,25}, y{105,20}, y{105,25}, y{106,1},
+y{106,7}, y{107,1}, y{107,13}, y{108,1}, y{108,19}, y{109,1}, y{109,25},
+y{110,7}, y{110,13}, y{111,7}, y{111,19}, y{112,7}, y{112,25}, y{113,13},
+y{113,19}, y{114,13}, y{114,25}, y{115,19}, y{115,25}, y{116,6}, y{116,12},
+y{117,6}, y{117,18}, y{118,6}, y{118,24}, y{119,12}, y{119,18}, y{120,12},
+y{120,24}, y{121,18}, y{121,24}, y{122,11}, y{122,17}, y{123,11},
+y{123,23}, y{124,17}, y{124,23}, y{125,16}, y{125,22}, y{126,4}, y{126,10},
+y{127,3}, y{127,9}, y{128,3}, y{128,15}, y{129,9}, y{129,15}, y{130,2},
+y{130,8}, y{131,2}, y{131,14}, y{132,2}, y{132,20}, y{133,8}, y{133,14},
+y{134,8}, y{134,20}, y{135,14}, y{135,20}, y{136,2}, y{136,6}, y{137,3},
+y{137,7}, y{138,3}, y{138,11}, y{139,7}, y{139,11}, y{140,4}, y{140,8},
+y{141,4}, y{141,12}, y{142,4}, y{142,16}, y{143,8}, y{143,12}, y{144,8},
+y{144,16}, y{145,12}, y{145,16}, y{146,5}, y{146,9}, y{147,5}, y{147,13},
+y{148,5}, y{148,17}, y{149,5}, y{149,21}, y{150,9}, y{150,13}, y{151,9},
+y{151,17}, y{152,9}, y{152,21}, y{153,13}, y{153,17}, y{154,13}, y{154,21},
+y{155,17}, y{155,21}, y{156,10}, y{156,14}, y{157,10}, y{157,18},
+y{158,10}, y{158,22}, y{159,14}, y{159,18}, y{160,14}, y{160,22},
+y{161,18}, y{161,22}, y{162,15}, y{162,19}, y{163,15}, y{163,23},
+y{164,19}, y{164,23}, y{165,20}, y{165,24};
+ 
+ /* To define another P system of the family, call the Sat module with other parameters and 
+    expand the input multiset with other values */
+    
+} /* End of main module */

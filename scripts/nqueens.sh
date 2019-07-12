@@ -1,0 +1,35 @@
+#!/bin/bash
+
+################################################################################
+#    Pcuda: Simulating P systems with active membranes on the GPU 
+#    This simulator is published on:
+#    J.M. Cecilia, J.M. García, G.D. Guerrero, M.A. Martínez-del-Amor, I. Pérez-Hurtado,
+#    M.J. Pérez-Jiménez. Simulation of P systems with active membranes on CUDA,
+#    Briefings in Bioinformatics, 11, 3 (2010), 313-322
+#
+#    Pcuda is a subproject of PMCGPU (Parallel simulators for Membrane 
+#                                       Computing on the GPU)   
+# 
+#    Copyright (c) 2009 Miguel Á. Martínez-del-Amor (RGNC, University of Seville)
+# 		       Ginés D. Guerrero (GACOP, University of Murcia)
+#		       Chema Cecilia (GACOP, University of Murcia)
+#		       Ignacio Pérez-Hurtado (RGNC, University of Seville)
+#    
+#    This file is part of Pcuda.
+#  
+#    Pcuda is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    Pcuda is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with Pcuda.  If not, see <http://www.gnu.org/licenses/>.
+
+../../bin/linux/release/pcuda -i test_data/misc/sat_3_queen_v2.bin -m 512 -o 1883 -b 269 -t 1 -p 1 -v 1
+
+../../bin/linux/release/pcuda -i test_data/misc/sat_4_queen_v3.bin -m 65536 -o 8120 -b 290 -t 1 -p 1 -v 1
