@@ -15,14 +15,32 @@ The execution stage applies the rules previously selected on the selection stage
 In the simulators developed in CUDA we have designed a solution based on mapping the double parallelism of P systems over the double parallelism of CUDA. In this sense, a *Block of Threads* (CUDA) is assigned to each *Membrane* of the system, and each *Thread* to each *Object* in the membrane. In this case, each thread corresponds to each object defined in the alphabet.
 
 ----------
-## 3. Publications ##
+## 3. Installation and usage ##
 
-### 3.1. Journals ###
+### 3.1. Installation: 
+
+  1. Install the CUDA SDK version 4.X.
+
+  2. Install the counterslib: extract the file counterslib.tar.gz inside the common folder of the CUDA SDK.
+
+  3. Copy the folder into the source folder of the CUDA SDK, and type "make".  
+
+### 3.2. Usage:
+
+Type ./pcuda -h to list the different options.
+  * A sequential simulation: ./pcuda -s -i file.bin
+  * A fast sequential simulation: ./pcuda -f -i file.bin -m #membranes -o #objects -b #threadPerBlock -t 1
+  * A parallel simulation on the GPU: ./pcuda -p -i file.bin -m #membranes -o #objects -b #threadPerBlock -t 1
+
+----------
+## 4. Publications ##
+
+### 4.1. Journals ###
 
 * Jose M. Cecilia, José M. García, Ginés D. Guerrero, Miguel A. Martínez-del-Amor, Ignacio Pérez-Hurtado, Mario J. Pérez-Jiménez. **Simulation of P systems with active membranes on CUDA**, *Briefings in Bioinformatics*, 11, 3 (2010), 313-322.
 * Jose M. Cecilia, José M. García, Ginés D. Guerrero, Miguel A. Martínez-del-Amor, Ignacio Pérez-Hurtado, Mario J. Pérez-Jiménez. **Implementing P systems parallelism by means of GPUs**, *Lecture Notes in Computer Science*, 5957 (2010), 227-241.
 
-### 3.2. Conference Contributions ###
+### 4.2. Conference Contributions ###
 
 * Miguel A. Martínez-del-Amor, Jose M. Cecilia, Ginés D. Guerrero, Ignacio Pérez-Hurtado. **An Overview of P System Simulation on GPUs**, *I Jornadas Jóvenes Investigadores*, 17 April 2010, Cáceres, Spain, p.2-7, (2010).
 * Ginés D. Guerrero, José M. Cecilia, José M. García, Miguel A. Martínez-del-Amor, Ignacio Pérez-Hurtado, Mario J. Pérez-Jiménez. **Analysis of P systems simulation on CUDA**, *XX Jornadas de Paralelismo*, September 2009, A coruña, Spain, 289-294, (2009). 
@@ -31,15 +49,13 @@ In the simulators developed in CUDA we have designed a solution based on mapping
 * Miguel A. Martínez-del-Amor, Ignacio Pérez-Hurtado, Mario J. Pérez-Jiménez, Jose M. Cecilia, Ginés D. Guerrero, José M. García. **Simulating active membrane systems using GPUs**, *10th Workshop on Membrane Computing*, August 2009, Curtea de Arges, Rumania, 369-384, (2009).
 * Miguel A. Martínez-del-Amor, Ignacio Pérez-Hurtado, Mario J. Pérez-Jiménez, José M. Cecilia, Ginés D. Guerrero, José M. García. **Simulation of recognizer P systems by using manycore GPUs**, *7th Brainstorming Week on Membrane Computing*, February 2009, Volume II, Seville, Spain, 45-58, (2009).
 
-### 3.3 Ph.D. Thesis ###
+### 4.3 Ph.D. Thesis ###
 
 * Miguel Á. Martínez-del-Amor. [Accelerating Membrane Systems Simulators using High Performance Computing with GPU.](http://www.cs.us.es/~mdelamor/research.html#thesis) May 2013, University of Seville. Advised by Mario J. Pérez-Jiménez and Ignacio Pérez-Hurtado.
 * José M. Cecilia. The GPU as a Processor for Novel Computation: Analysis and Contributions. 2011, University of Murcia. Advised by J.M. García and M. Ujaldón.
 
 ----------
-## 4. Downloads ##
-
-[Link to PCUDA Files](http://sourceforge.net/projects/pmcgpu/files/PCUDA/)
+## 5. Downloads ##
 
 [Required Counterslib library](http://sourceforge.net/projects/pmcgpu/files/counterslib)
 
@@ -49,14 +65,14 @@ Read the howto.pdf (extract from Miguel A. Martínez-del-Amor's thesis) for futh
 *Results showed in our publications were obtained not using the fast simulator as it is provided here. This simulator was developed and improved after that time. Please, read Martínez-del-Amor's [doctoral dissertation](http://www.cs.us.es/~mdelamor/research.html#thesis) for further information, and new results.*
 
 ----------
-## 5. How to acknowledge ##
+## 6. How to acknowledge ##
 
 If you intend to create a branch of PCUDA, or use its produced results, please consider citing the following publication:
 
 *Jose M. Cecilia, José M. García, Ginés D. Guerrero, Miguel A. Martínez-del-Amor, Ignacio Pérez-Hurtado, Mario J. Pérez-Jiménez. Simulation of P systems with active membranes on CUDA, Briefings in Bioinformatics, 11, 3 (2010), 313-322.*
 
 ----------
-## 6. Funding ##
+## 7. Funding ##
 
 TIN2006–13425 of the Ministerio de Educación y Ciencia of Spain, cofinanced by FEDER funds, and ‘‘Proyecto de Excelencia con Investigador de Reconocida Valía’’ of the Junta de Andalucía under grant P08-TIC04200 to M.A.M., I.P.-H. and M.J.P.-J.
 
